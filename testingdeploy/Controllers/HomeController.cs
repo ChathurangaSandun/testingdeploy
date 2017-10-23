@@ -14,11 +14,11 @@ namespace testingdeploy.Controllers
         public ActionResult PunchoutSetupRequest()
         {
 
+            ViewBag.result = "run is ok";
 
 
 
-
-            return Redirect("Index");
+            return View();
         }
 
 

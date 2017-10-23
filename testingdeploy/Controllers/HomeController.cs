@@ -21,26 +21,14 @@ namespace testingdeploy.Controllers
 
             _log.TrackTrace("Ok " + DateTime.Now.ToString());
 
-            //FileStream fs = new FileStream(@"\out.txt", FileMode.Open, FileAccess.ReadWrite);
-            //using (StreamReader sr = new StreamReader(fs))
-            //{
-            //    using (StreamWriter sw = new StreamWriter(fs))
-            //    {
-            //        sw.WriteLine(DateTime.Now.ToString(CultureInfo.InvariantCulture));
-            //    }
-            //}
+
+            var req = Request.InputStream;
+            var xml = new StreamReader(req).ReadToEnd();
+
+            _log.TrackTrace(xml.ToString());
 
 
 
-
-            //using (StreamWriter outputFile = new StreamWriter(@"out.txt"))
-            //{
-            //    outputFile.WriteLine(DateTime.Now.ToString(CultureInfo.InvariantCulture));
-            //    outputFile.WriteLine("ok");
-            //    outputFile.WriteLine();
-            //}
-
-            ViewBag.result = "run is ok";
 
 
 

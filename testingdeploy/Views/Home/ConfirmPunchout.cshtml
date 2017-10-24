@@ -2,11 +2,19 @@
 
 @{
     ViewBag.Title = "ConfirmPunchout";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 
     var _log = new Microsoft.ApplicationInsights.TelemetryClient();
-    _log.TrackTrace(Session["BUYER_URL"].ToString());
-    _log.TrackTrace(TempData["ORDER_MESSAGE"].ToString());
+    try
+    {
+        _log.TrackTrace(Session["BUYER_URL"].ToString());
+        _log.TrackTrace(TempData["ORDER_MESSAGE"].ToString());
+    }
+    catch (Exception e)
+    {
+        _log.TrackException(e);
+    }
+
 }
 
 <h2>ConfirmPunchout</h2>

@@ -23,13 +23,13 @@ namespace testingdeploy.Controllers
 
 
 
-            _log.TrackTrace("Ok " + DateTime.Now.ToString());
+           // _log.TrackTrace("Ok " + DateTime.Now.ToString());
 
 
             var req = Request.InputStream;
             var xml = new StreamReader(req).ReadToEnd();
 
-            _log.TrackTrace(xml.ToString());
+            //_log.TrackTrace(xml.ToString());
 
             var xmlSerializer = new XmlSerializer(typeof(MainRequest));
 
@@ -65,7 +65,7 @@ namespace testingdeploy.Controllers
             serializer.Serialize(stringwriter, mainResponse);
             var responseTest = stringwriter.ToString().Replace("utf-16", "utf-8");
 
-            _log.TrackTrace(responseTest);
+            //_log.TrackTrace(responseTest);
 
             return Content(responseTest);
         }
@@ -203,7 +203,7 @@ namespace testingdeploy.Controllers
                 XmlSerializer serializer = new XmlSerializer(typeof(OrderMessageCXML));
                 serializer.Serialize(stringwriter, cxml);
                 var message = stringwriter.ToString().Replace("utf-16", "utf-8");
-                _log.TrackTrace(message);
+                //_log.TrackTrace(message);
                     
                 TempData["ORDER_MESSAGE"] = message;
             }

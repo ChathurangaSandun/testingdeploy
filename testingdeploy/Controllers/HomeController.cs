@@ -21,6 +21,8 @@ namespace testingdeploy.Controllers
         public ActionResult PunchoutSetupRequest()
         {
 
+            
+
             _log.TrackTrace("Ok " + DateTime.Now.ToString());
 
 
@@ -31,14 +33,14 @@ namespace testingdeploy.Controllers
 
             var xmlSerializer = new XmlSerializer(typeof(MainRequest));
 
-            MainRequest punchOutSetupRequest = (MainRequest)xmlSerializer.Deserialize(new StringReader(xml.ToString()));
-
+            MainRequest request = (MainRequest)xmlSerializer.Deserialize(new StringReader(xml.ToString()));
+            Session["BROWSER_URL"] = request.Request.PunchOutSetupRequest.BrowserFormPost.URL;
 
 
             MainResponse mainResponse = new MainResponse()
             {
-                PayloadID = punchOutSetupRequest.PayloadID,
-                Timestamp = punchOutSetupRequest.Timestamp,
+                PayloadID = request.PayloadID,
+                Timestamp = request.Timestamp,
                 Response = new Response()
                 {
                     Status = new Status()

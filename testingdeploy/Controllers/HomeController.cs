@@ -41,6 +41,7 @@ namespace testingdeploy.Controllers
 
             MainResponse mainResponse = new MainResponse()
             {
+                
                 PayloadID = request.PayloadID,
                 Timestamp = request.Timestamp,
                 Response = new Response()
@@ -48,16 +49,16 @@ namespace testingdeploy.Controllers
                     Status = new Status()
                     {
                         Code = "200",
-                        Text = "Ok"
+                        Text = "success"
                     },
                     PunchOutSetupResponse = new PunchOutSetupResponse()
                     {
                         StartPage = new StartPage()
                         {
                             URL = "https://kumara.azurewebsites.net/home/index"
+                            
                         }
                     }
-
                 }
             };
 

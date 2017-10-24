@@ -65,7 +65,7 @@ namespace testingdeploy.Controllers
 
             XmlSerializer serializer = new XmlSerializer(typeof(MainResponse));
             serializer.Serialize(stringwriter, mainResponse);
-            var responseTest = stringwriter.ToString().Replace("utf-16", "utf-8");
+            var responseTest = stringwriter.ToString();
 
             _log.TrackTrace(responseTest);
 

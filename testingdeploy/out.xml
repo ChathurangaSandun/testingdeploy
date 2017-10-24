@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE cXML SYSTEM "http://xml.cxml.org/schemas/cXML/1.2.014/cXML.dtd">
+<cXML payloadID="2008-12-24T10:46:32-06:00@www.test.com" xml:lang="en-US" timestamp="2008-12-24T10:46:32-06:00">
+	<Header>
+		<From>
+			<Credential domain="NetworkId">
+				<Identity>testcompany</Identity>
+			</Credential>
+		</From>
+		<To>
+			<Credential domain="NetworkId">
+				<Identity>testsite</Identity>
+			</Credential>
+		</To>
+		<Sender>
+			<Credential domain="www.testsite.com">
+				<Identity>PunchoutResponse</Identity>
+			</Credential>
+			<UserAgent>PunchoutSite</UserAgent>
+		</Sender>
+	</Header>
+	<Message>
+		<PunchOutOrderMessage>
+			<BuyerCookie>PSFT_2008-12-24T10:44:00-06:00</BuyerCookie>
+			<PunchOutOrderMessageHeader operationAllowed="edit">
+				<Total>
+					<Money currency="USD">205.34</Money>
+				</Total>
+			</PunchOutOrderMessageHeader>
+			<ItemIn quantity="2">
+				<ItemID>
+					<SupplierPartID>123</SupplierPartID>
+					<SupplierPartAuxiliaryID />
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">102.67</Money>
+					</UnitPrice>
+					<Description xml:lang="en-US">PRESSURE GAUGE</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">123</Classification>
+					<ManufacturerPartID>123</ManufacturerPartID>
+					<ManufacturerName>testManufacturer</ManufacturerName>
+					<Extrinsic name="QuoteId">12345</Extrinsic>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="2">
+				<ItemID>
+					<SupplierPartID>123</SupplierPartID>
+					<SupplierPartAuxiliaryID />
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">102.67</Money>
+					</UnitPrice>
+					<Description xml:lang="en-US">PRESSURE GAUGE</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">123</Classification>
+					<ManufacturerPartID>123</ManufacturerPartID>
+					<ManufacturerName>testManufacturer</ManufacturerName>
+					<Extrinsic name="QuoteId">12345</Extrinsic>
+					<Extrinsic name="QuoteLine">1</Extrinsic>
+				</ItemDetail>
+			</ItemIn>
+		</PunchOutOrderMessage>
+	</Message>
+</cXML>

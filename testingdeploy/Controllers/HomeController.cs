@@ -15,13 +15,13 @@ namespace testingdeploy.Controllers
     public class HomeController : Controller
     {
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
-
+        private MainRequest request;
 
         //[HttpPost]
         public ActionResult PunchoutSetupRequest()
         {
 
-            
+
 
             _log.TrackTrace("Ok " + DateTime.Now.ToString());
 
@@ -33,8 +33,8 @@ namespace testingdeploy.Controllers
 
             var xmlSerializer = new XmlSerializer(typeof(MainRequest));
 
-            MainRequest request = (MainRequest)xmlSerializer.Deserialize(new StringReader(xml.ToString()));
-            Session["BROWSER_URL"] = request.Request.PunchOutSetupRequest.BrowserFormPost.URL;
+            request = (MainRequest)xmlSerializer.Deserialize(new StringReader(xml.ToString()));
+            Session["BUYER_URL"] = request.Request.PunchOutSetupRequest.BrowserFormPost.URL;
 
 
             MainResponse mainResponse = new MainResponse()
@@ -52,7 +52,7 @@ namespace testingdeploy.Controllers
                     {
                         StartPage = new StartPage()
                         {
-                            URL = "https://kumara.azurewebsites.net/home/index"
+                            URL = "https://kumara.azurewebsites.net/home/PunchoutSetupRequest"
                         }
                     }
 
@@ -63,7 +63,7 @@ namespace testingdeploy.Controllers
 
             XmlSerializer serializer = new XmlSerializer(typeof(MainResponse));
             serializer.Serialize(stringwriter, mainResponse);
-            var responseTest = stringwriter.ToString().Replace("utf-16","utf-8");
+            var responseTest = stringwriter.ToString().Replace("utf-16", "utf-8");
 
             _log.TrackTrace(responseTest);
 
@@ -93,5 +93,119 @@ namespace testingdeploy.Controllers
 
             return View();
         }
+
+
+
+        public ActionResult ConfirmPunchout()
+        {
+            OrderMessageCXML cxml = new OrderMessageCXML()
+            {
+                PayloadID = request.PayloadID,
+                Lang = request.Lang,
+                Timestamp = request.Timestamp,
+                Header = new OrderMessageHeader()
+                {
+                    From = new OrderMessageFrom()
+                    {
+                        Credential = new OrderMessageCredential()
+                        {
+                            Domain = "DUNS",
+                            Identity = request.Header.From.Credential.Identity,
+                        }
+                    },
+                    To = new OrderMessageTo()
+                    {
+                        Credential = new OrderMessageCredential()
+                        {
+                            Domain = "DUNS",
+                            Identity = request.Header.To.Credential.Identity
+
+                        },
+                    },
+                    Sender = new OrderMessageSender()
+                    {
+
+                        Credential = new OrderMessageCredential()
+                        {
+                            Domain = "DUNS",
+                            Identity = request.Header.From.Credential.Identity,
+                        }
+                    }
+                },
+
+                Message = new Message()
+                {
+                    PunchOutOrderMessage = new PunchOutOrderMessage()
+                    {
+                        BuyerCookie = request.Request.PunchOutSetupRequest.BuyerCookie,
+                        PunchOutOrderMessageHeader = new PunchOutOrderMessageHeader()
+                        {
+                            OperationAllowed = "Create",
+                            Total = new Total()
+                            {
+                                Money = new Money()
+                                {
+                                    Currency = "USD",
+                                    Text = "20145.22",
+                                }
+                            },
+
+                        },
+                        ItemIn = new List<ItemIn>()
+                        {
+                            new ItemIn()
+                            {
+                                Quantity   = "1",
+                                ItemID = new ItemID()
+                                {
+                                    SupplierPartAuxiliaryID = "123",
+                                    SupplierPartID = "567"
+                                },
+                                ItemDetail = new ItemDetail()
+                                {
+                                    Classification = new Classification()
+                                    {
+                                        Domain = "UNSPSC",
+                                        Text = "14111805"
+                                    },
+                                    Description = new Description()
+                                    {
+                                        Lang = "en-US",
+                                        Text = "belttt"
+                                    },
+                                    ManufacturerName = "chathuranga",
+                                    ManufacturerPartID = "123455",
+                                    UnitOfMeasure = "EA",
+                                    UnitPrice = new UnitPrice()
+                                    {
+                                         Money = new Money()
+                                         {
+                                             Currency = "USD",
+                                             Text = "10.25"
+                                         }
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+            };
+
+
+            var stringwriter = new StringWriter();
+
+            XmlSerializer serializer = new XmlSerializer(typeof(OrderMessageCXML));
+            serializer.Serialize(stringwriter, cxml);
+            var message = stringwriter.ToString().Replace("utf-16", "utf-8");
+
+            TempData["ORDER_MESSAGE"] = message;
+
+            return View();
+        }
+
+
     }
 }

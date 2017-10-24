@@ -30,7 +30,7 @@ namespace testingdeploy.Models
     public class OrderMessageSender
     {
         [XmlElement(ElementName = "Credential")]
-        public Credential Credential { get; set; }
+        public OrderMessageCredential Credential { get; set; }
         [XmlElement(ElementName = "UserAgent")]
         public string UserAgent { get; set; }
     }

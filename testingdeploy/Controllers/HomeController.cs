@@ -69,9 +69,6 @@ namespace testingdeploy.Controllers
             serializer.Serialize(stringwriter, mainResponse);
             var responseTest = stringwriter.ToString().Replace("utf-16","utf-8");
             var contains = responseTest.Contains("!DOCTYPE");
-            responseTest = responseTest.Replace("\t", "");
-            responseTest = responseTest.Replace("\r", "");
-            responseTest = responseTest.Replace("\n", "");
             if (!contains)
             {
                 int indexDoctypePut = responseTest.IndexOf("?>", StringComparison.Ordinal) + 2;
@@ -79,8 +76,12 @@ namespace testingdeploy.Controllers
                 
                 var firstPart = responseTest.Substring(0, indexDoctypePut);
                 var secondPart = responseTest.Substring(indexDoctypePut, responseTest.Length-indexDoctypePut);
-
+                secondPart =
+                    secondPart.Replace(
+                        "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"",
+                        "");
                 var text = firstPart + "<!DOCTYPE cXML SYSTEM \"http://xml.cxml.org/schemas/cXML/1.2.011/cXML.dtd\">" + secondPart;
+
 
 
                 _log.TrackTrace(text);

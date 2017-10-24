@@ -15,7 +15,7 @@ namespace testingdeploy.Controllers
     public class HomeController : Controller
     {
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
-        private MainRequest request;
+        private static MainRequest request;
 
         //[HttpPost]
         public ActionResult PunchoutSetupRequest()
@@ -203,7 +203,8 @@ namespace testingdeploy.Controllers
                 XmlSerializer serializer = new XmlSerializer(typeof(OrderMessageCXML));
                 serializer.Serialize(stringwriter, cxml);
                 var message = stringwriter.ToString().Replace("utf-16", "utf-8");
-
+                _log.TrackTrace(message);
+                    
                 TempData["ORDER_MESSAGE"] = message;
             }
 

@@ -7,8 +7,8 @@
     var _log = new Microsoft.ApplicationInsights.TelemetryClient();
     try
     {
-        _log.TrackTrace(Session["BUYER_URL"].ToString());
-        _log.TrackTrace(TempData["ORDER_MESSAGE"].ToString());
+        _log.TrackTrace(System.Web.HttpContext.Current.Application["BUYER_URL"].ToString());
+        _log.TrackTrace(System.Web.HttpContext.Current.Application["ORDER_MESSAGE"].ToString());
     }
     catch (Exception e)
     {
@@ -22,8 +22,8 @@
 
 
 
-<form action="@Session["BUYER_URL"].ToString()" method="post">
-    <input type="hidden" name="cxml-urlencoded" value="@TempData["ORDER_MESSAGE"].ToString()" />
+<form action="@System.Web.HttpContext.Current.Application["BUYER_URL"].ToString()" method="post">
+    <input type="hidden" name="cxml-urlencoded" value="@System.Web.HttpContext.Current.Application["ORDER_MESSAGE"].ToString()" />
     <input type="submit" class="btn" name="Punchout" />
 </form>
 

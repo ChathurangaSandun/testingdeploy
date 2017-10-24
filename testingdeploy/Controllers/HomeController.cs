@@ -34,7 +34,7 @@ namespace testingdeploy.Controllers
             var xmlSerializer = new XmlSerializer(typeof(MainRequest));
 
             request = (MainRequest)xmlSerializer.Deserialize(new StringReader(xml.ToString()));
-            Session["BUYER_URL"] = request.Request.PunchOutSetupRequest.BrowserFormPost.URL;
+            System.Web.HttpContext.Current.Application["BUYER_URL"] = request.Request.PunchOutSetupRequest.BrowserFormPost.URL;
 
 
             MainResponse mainResponse = new MainResponse()
@@ -52,7 +52,7 @@ namespace testingdeploy.Controllers
                     {
                         StartPage = new StartPage()
                         {
-                            URL = "https://kumara.azurewebsites.net/home/Index"
+                            URL = "https://kumara.azurewebsites.net/home/index"
                         }
                     }
 
@@ -204,8 +204,10 @@ namespace testingdeploy.Controllers
                 serializer.Serialize(stringwriter, cxml);
                 var message = stringwriter.ToString().Replace("utf-16", "utf-8");
                 //_log.TrackTrace(message);
-                    
-                TempData["ORDER_MESSAGE"] = message;
+
+                var a = Session["BUYER_URL"];
+
+                System.Web.HttpContext.Current.Application["ORDER_MESSAGE"] = message;
             }
 
             return View();

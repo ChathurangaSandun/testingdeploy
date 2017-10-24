@@ -52,7 +52,7 @@ namespace testingdeploy.Controllers
                     {
                         StartPage = new StartPage()
                         {
-                            URL = "https://kumara.azurewebsites.net/home/PunchoutSetupRequest"
+                            URL = "https://kumara.azurewebsites.net/home/Index"
                         }
                     }
 
@@ -98,110 +98,114 @@ namespace testingdeploy.Controllers
 
         public ActionResult ConfirmPunchout()
         {
-            OrderMessageCXML cxml = new OrderMessageCXML()
+
+            if (request != null)
             {
-                PayloadID = request.PayloadID,
-                Lang = request.Lang,
-                Timestamp = request.Timestamp,
-                Header = new OrderMessageHeader()
+                OrderMessageCXML cxml = new OrderMessageCXML()
                 {
-                    From = new OrderMessageFrom()
+                    PayloadID = request.PayloadID,
+                    Lang = request.Lang,
+                    Timestamp = request.Timestamp,
+                    Header = new OrderMessageHeader()
                     {
-                        Credential = new OrderMessageCredential()
+                        From = new OrderMessageFrom()
                         {
-                            Domain = "DUNS",
-                            Identity = request.Header.From.Credential.Identity,
-                        }
-                    },
-                    To = new OrderMessageTo()
-                    {
-                        Credential = new OrderMessageCredential()
-                        {
-                            Domain = "DUNS",
-                            Identity = request.Header.To.Credential.Identity
-
-                        },
-                    },
-                    Sender = new OrderMessageSender()
-                    {
-
-                        Credential = new OrderMessageCredential()
-                        {
-                            Domain = "DUNS",
-                            Identity = request.Header.From.Credential.Identity,
-                        }
-                    }
-                },
-
-                Message = new Message()
-                {
-                    PunchOutOrderMessage = new PunchOutOrderMessage()
-                    {
-                        BuyerCookie = request.Request.PunchOutSetupRequest.BuyerCookie,
-                        PunchOutOrderMessageHeader = new PunchOutOrderMessageHeader()
-                        {
-                            OperationAllowed = "Create",
-                            Total = new Total()
+                            Credential = new OrderMessageCredential()
                             {
-                                Money = new Money()
-                                {
-                                    Currency = "USD",
-                                    Text = "20145.22",
-                                }
+                                Domain = "DUNS",
+                                Identity = request.Header.From.Credential.Identity,
+                            }
+                        },
+                        To = new OrderMessageTo()
+                        {
+                            Credential = new OrderMessageCredential()
+                            {
+                                Domain = "DUNS",
+                                Identity = request.Header.To.Credential.Identity
+
                             },
-
                         },
-                        ItemIn = new List<ItemIn>()
+                        Sender = new OrderMessageSender()
                         {
-                            new ItemIn()
+
+                            Credential = new OrderMessageCredential()
                             {
-                                Quantity   = "1",
-                                ItemID = new ItemID()
+                                Domain = "DUNS",
+                                Identity = request.Header.From.Credential.Identity,
+                            }
+                        }
+                    },
+
+                    Message = new Message()
+                    {
+                        PunchOutOrderMessage = new PunchOutOrderMessage()
+                        {
+                            BuyerCookie = request.Request.PunchOutSetupRequest.BuyerCookie,
+                            PunchOutOrderMessageHeader = new PunchOutOrderMessageHeader()
+                            {
+                                OperationAllowed = "Create",
+                                Total = new Total()
                                 {
-                                    SupplierPartAuxiliaryID = "123",
-                                    SupplierPartID = "567"
+                                    Money = new Money()
+                                    {
+                                        Currency = "USD",
+                                        Text = "20145.22",
+                                    }
                                 },
-                                ItemDetail = new ItemDetail()
+
+                            },
+                            ItemIn = new List<ItemIn>()
+                            {
+                                new ItemIn()
                                 {
-                                    Classification = new Classification()
+                                    Quantity = "1",
+                                    ItemID = new ItemID()
                                     {
-                                        Domain = "UNSPSC",
-                                        Text = "14111805"
+                                        SupplierPartAuxiliaryID = "123",
+                                        SupplierPartID = "567"
                                     },
-                                    Description = new Description()
+                                    ItemDetail = new ItemDetail()
                                     {
-                                        Lang = "en-US",
-                                        Text = "belttt"
-                                    },
-                                    ManufacturerName = "chathuranga",
-                                    ManufacturerPartID = "123455",
-                                    UnitOfMeasure = "EA",
-                                    UnitPrice = new UnitPrice()
-                                    {
-                                         Money = new Money()
-                                         {
-                                             Currency = "USD",
-                                             Text = "10.25"
-                                         }
+                                        Classification = new Classification()
+                                        {
+                                            Domain = "UNSPSC",
+                                            Text = "14111805"
+                                        },
+                                        Description = new Description()
+                                        {
+                                            Lang = "en-US",
+                                            Text = "belttt"
+                                        },
+                                        ManufacturerName = "chathuranga",
+                                        ManufacturerPartID = "123455",
+                                        UnitOfMeasure = "EA",
+                                        UnitPrice = new UnitPrice()
+                                        {
+                                            Money = new Money()
+                                            {
+                                                Currency = "USD",
+                                                Text = "10.25"
+                                            }
+                                        }
                                     }
                                 }
                             }
+
+
                         }
-
-
                     }
-                }
 
-            };
+                };
 
 
-            var stringwriter = new StringWriter();
+                var stringwriter = new StringWriter();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(OrderMessageCXML));
-            serializer.Serialize(stringwriter, cxml);
-            var message = stringwriter.ToString().Replace("utf-16", "utf-8");
+                XmlSerializer serializer = new XmlSerializer(typeof(OrderMessageCXML));
+                serializer.Serialize(stringwriter, cxml);
+                var message = stringwriter.ToString().Replace("utf-16", "utf-8");
 
-            TempData["ORDER_MESSAGE"] = message;
+                TempData["ORDER_MESSAGE"] = message;
+            }
 
             return View();
         }

@@ -1,10 +1,17 @@
-﻿
+﻿@using Microsoft.ApplicationInsights
+
 @{
     ViewBag.Title = "ConfirmPunchout";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var _log = new Microsoft.ApplicationInsights.TelemetryClient();
+    _log.TrackTrace(Session["BUYER_URL"].ToString());
+    _log.TrackTrace(TempData["ORDER_MESSAGE"].ToString());
 }
 
 <h2>ConfirmPunchout</h2>
+
+
 
 
 <form action="@Session["BUYER_URL"].ToString()" method="post">

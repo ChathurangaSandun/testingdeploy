@@ -65,12 +65,36 @@ namespace testingdeploy.Controllers
             var stringwriter = new StringWriter();
 
             XmlSerializer serializer = new XmlSerializer(typeof(MainResponse));
+            
             serializer.Serialize(stringwriter, mainResponse);
-            var responseTest = stringwriter.ToString();
+            var responseTest = stringwriter.ToString().Replace("utf-16","utf-8");
+            var contains = responseTest.Contains("!DOCTYPE");
+            responseTest = responseTest.Replace("\t", "");
+            responseTest = responseTest.Replace("\r", "");
+            responseTest = responseTest.Replace("\n", "");
+            if (!contains)
+            {
+                int indexDoctypePut = responseTest.IndexOf("?>", StringComparison.Ordinal) + 2;
+                
+                
+                var firstPart = responseTest.Substring(0, indexDoctypePut);
+                var secondPart = responseTest.Substring(indexDoctypePut, responseTest.Length-indexDoctypePut);
 
-            _log.TrackTrace(responseTest);
+                var text = firstPart + "<!DOCTYPE cXML SYSTEM \"http://xml.cxml.org/schemas/cXML/1.2.011/cXML.dtd\">" + secondPart;
 
-            return Content(responseTest);
+
+                _log.TrackTrace(text);
+                return Content(text);
+            }
+            else
+            {
+                return Content(responseTest);
+            }
+
+
+            
+
+           
         }
 
 

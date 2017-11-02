@@ -71,7 +71,7 @@ namespace testingdeploy.Controllers
             var contains = responseTest.Contains("!DOCTYPE");
             if (!contains)
             {
-                int indexDoctypePut = responseTest.IndexOf("?>", StringComparison.Ordinal) + 2;
+                var indexDoctypePut = responseTest.IndexOf("?>", StringComparison.Ordinal) + 2;
                 
                 
                 var firstPart = responseTest.Substring(0, indexDoctypePut);
@@ -218,6 +218,7 @@ namespace testingdeploy.Controllers
                                     }
                                 }
                             }
+                            
 
 
                         }

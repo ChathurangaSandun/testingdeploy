@@ -17,7 +17,7 @@ namespace testingdeploy
     {
 
         //ADD Temp 
-        protected string fileNameBase = "c:\\temp\\log-";
+        protected string fileNameBase = "~/App_Data/log.txt";
         protected string ext = "log";
 
         protected string FileName

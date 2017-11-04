@@ -14,6 +14,8 @@ namespace testingdeploy.Controllers
 {
     public class HomeController : Controller
     {
+
+        private string a;
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
         private static MainRequest request;
 

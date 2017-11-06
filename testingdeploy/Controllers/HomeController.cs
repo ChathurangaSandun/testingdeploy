@@ -201,7 +201,7 @@ namespace testingdeploy.Controllers
                                             Lang = "en-US",
                                             Text = "belttt"
                                         },
-                                        ManufacturerName = "chathuranga",
+                                        //ManufacturerName = "chathuranga",
                                         ManufacturerPartID = "123455",
                                         UnitOfMeasure = "EA",
                                         UnitPrice = new UnitPrice()

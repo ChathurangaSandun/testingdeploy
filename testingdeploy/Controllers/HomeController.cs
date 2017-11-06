@@ -191,15 +191,15 @@ namespace testingdeploy.Controllers
                                     Quantity = "1",
                                     ItemID = new ItemID()
                                     {
-                                        SupplierPartAuxiliaryID = "123",
-                                        SupplierPartID = "567"
+                                        SupplierPartAuxiliaryID = "",
+                                        SupplierPartID = ""
                                     },
                                     ItemDetail = new ItemDetail()
                                     {
                                         Classification = new Classification()
                                         {
                                             Domain = "UNSPSC",
-                                            Text = ""
+                                            Text = "22525"
                                         },
                                         Description = new Description()
                                         {

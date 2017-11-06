@@ -189,6 +189,11 @@ namespace testingdeploy.Controllers
                                 new ItemIn()
                                 {
                                     Quantity = "1",
+                                    ItemID = new ItemID()
+                                    {
+                                        SupplierPartAuxiliaryID = "123",
+                                        SupplierPartID = "567"
+                                    },
                                     ItemDetail = new ItemDetail()
                                     {
                                         Classification = new Classification()

@@ -57,8 +57,8 @@ namespace testingdeploy.Controllers
                     {
                         StartPage = new StartPage()
                         {
-                            URL = "https://kumara.azurewebsites.net/home/index"
-                            
+                            URL = "https://fffffff.azurewebsites.net/home/index"
+
                         }
                     }
                 }

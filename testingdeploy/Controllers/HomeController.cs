@@ -19,7 +19,7 @@ namespace testingdeploy.Controllers
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
         private static MainRequest request;
 
-        [HttpGet]
+        [HttpDelete]
         public ActionResult PunchoutSetupRequest()
         {
 

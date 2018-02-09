@@ -50,8 +50,8 @@ namespace testingdeploy.Controllers
                 {
                     Status = new Status()
                     {
-                        Code = "200",
-                        Text = "success"
+                        Code = "402",
+                        Text = "Unauthorized"
                     },
                     PunchOutSetupResponse = new PunchOutSetupResponse()
                     {

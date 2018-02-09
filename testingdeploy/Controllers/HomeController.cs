@@ -86,7 +86,7 @@ namespace testingdeploy.Controllers
 
 
                 _log.TrackTrace(text);
-                return Content(text);
+                return HttpNotFound();
             }
             else
             {

@@ -57,8 +57,7 @@ namespace testingdeploy.Controllers
                     {
                         StartPage = new StartPage()
                         {
-                            URL = "https://fffffff.azurewebsites.net/home/index"
-
+                            URL = "https://punchouttesting.azurewebsites.net/home/index"
                         }
                     }
                 }

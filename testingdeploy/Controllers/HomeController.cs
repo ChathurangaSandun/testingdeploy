@@ -53,13 +53,7 @@ namespace testingdeploy.Controllers
                         Code = "402",
                         Text = "Unauthorized"
                     },
-                    PunchOutSetupResponse = new PunchOutSetupResponse()
-                    {
-                        StartPage = new StartPage()
-                        {
-                            URL = "https://punchouttesting.azurewebsites.net/home/index"
-                        }
-                    }
+                    PunchOutSetupResponse = null
                 }
             };
 

@@ -51,7 +51,8 @@ namespace testingdeploy.Controllers
                     Status = new Status()
                     {
                         Code = "402",
-                        Text = "Unauthorized"
+                        Text = "Unauthorized",
+                        __Text = "unautherized"
                     },
                     PunchOutSetupResponse = null
                 }

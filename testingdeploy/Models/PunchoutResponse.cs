@@ -17,6 +17,9 @@ namespace testingdeploy.Models
         public string Code { get; set; }
         [XmlAttribute(AttributeName = "text")]
         public string Text { get; set; }
+        [XmlText]
+        public string __Text { get; set; }
+
     }
 
     [XmlRoot(ElementName = "StartPage")]

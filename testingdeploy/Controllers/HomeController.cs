@@ -53,8 +53,7 @@ namespace testingdeploy.Controllers
                         Code = "402",
                         Text = "Unauthorized",
                         __Text = "unautherized"
-                    },
-                    PunchOutSetupResponse = null
+                    }
                 }
             };
 

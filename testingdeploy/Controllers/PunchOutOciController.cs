@@ -16,7 +16,7 @@ namespace testingdeploy.Controllers
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
 
         [HttpPost]
-        public ActionResult PunchoutLoginUrl(AuthenticateModel authenticateModel)
+        public ActionResult PunchoutLoginUrl()
         {
             _log.TrackTrace("punchout oci request " + DateTime.Now.ToString());
 

@@ -200,6 +200,7 @@
     <Content Include="Views\Home\PunchoutSetupRequest.cshtml" />
     <Content Include="Views\Home\ConfirmPunchout.cshtml" />
     <Content Include="Views\PunchOutOci\PunchoutLoginUrl.cshtml" />
+    <Content Include="Views\PunchOutOci\CartPage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace testingdeploy.Controllers
         
         private bool UserValid(string username, string password)
         {
-            if (username == "sandun" && password == "password")
+            if (username == "sandun" && password == "123456")
             {
                 return true;
             }

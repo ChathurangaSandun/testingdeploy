@@ -22,8 +22,15 @@ namespace testingdeploy.Controllers
             _log.TrackTrace("HOOK_URL");
 
             var valied = this.UserValid(USERNAME, PASSWORD);
-
-            return RedirectToAction("CartPage", "PunchOutOci");
+            if (valied)
+            {
+                return RedirectToAction("CartPage", "PunchOutOci");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
         }
         
         private bool UserValid(string username, string password)

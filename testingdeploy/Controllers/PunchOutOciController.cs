@@ -23,9 +23,9 @@ namespace testingdeploy.Controllers
 
             var valied = this.UserValid(USERNAME, PASSWORD);
 
-            return this.View("CartPage");
+            return RedirectToAction("CartPage", "PunchOutOci");
         }
-
+        
         private bool UserValid(string username, string password)
         {
             if (username == "sandun" && password == "password")
@@ -36,6 +36,11 @@ namespace testingdeploy.Controllers
             {
                 return false;
             }
+        }
+
+        public ActionResult CartPage()
+        {
+            return this.View("CartPage");
         }
     }
 }

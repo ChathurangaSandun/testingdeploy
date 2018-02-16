@@ -233,27 +233,35 @@ namespace testingdeploy.Controllers
             }
 
 
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                string postData = d;
+                byte[] bytes = Encoding.UTF8.GetBytes(postData);
+                request.ContentLength = bytes.Length;
+
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(bytes, 0, bytes.Length);
+
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
+
+                var result = reader.ReadToEnd();
+                stream.Dispose();
+                reader.Dispose();
+            }
+            catch (Exception e)
+            {
+                this._log.TrackException(e);
+                throw;
+            }
 
 
 
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            string postData = d;
-            byte[] bytes = Encoding.UTF8.GetBytes(postData);
-            request.ContentLength = bytes.Length;
-
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(bytes, 0, bytes.Length);
-
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(stream);
-
-            var result = reader.ReadToEnd();
-            stream.Dispose();
-            reader.Dispose();
+            
             
         }
     }

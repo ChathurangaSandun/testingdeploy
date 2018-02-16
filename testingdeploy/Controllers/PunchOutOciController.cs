@@ -32,15 +32,17 @@ namespace testingdeploy.Controllers
             _hookUrl = HOOK_URL;
 
 
-            var valied = this.UserValid(USERNAME, PASSWORD);
-            if (valied)
-            {
-                return RedirectToAction("CartPage", "PunchOutOci");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //var valied = this.UserValid(USERNAME, PASSWORD);
+            //if (valied)
+            //{
+            //    return RedirectToAction("CartPage", "PunchOutOci");
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            return this.View();
 
         }
 

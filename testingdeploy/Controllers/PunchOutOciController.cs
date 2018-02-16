@@ -7,6 +7,9 @@ using System.Web.Mvc;
 namespace testingdeploy.Controllers
 {
     using System.Globalization;
+    using System.IO;
+    using System.Net;
+    using System.Text;
 
     using Microsoft.Ajax.Utilities;
     using Microsoft.ApplicationInsights;
@@ -16,7 +19,7 @@ namespace testingdeploy.Controllers
     public class PunchOutOciController : Controller
     {
 
-        private string _hookUrl;
+        private static string _hookUrl;
 
         private string a;
         TelemetryClient _log = new Microsoft.ApplicationInsights.TelemetryClient();
@@ -60,8 +63,6 @@ namespace testingdeploy.Controllers
 
         public ActionResult PunchoutHookOci()
         {
-            if (!this._hookUrl.IsNullOrWhiteSpace())
-            {
                 List<OciOrderItem> orderItems = new List<OciOrderItem>();
                 orderItems.Add(new OciOrderItem()
                 {
@@ -96,33 +97,54 @@ namespace testingdeploy.Controllers
                         "NEW_ITEM-CURRENCY[n]", "NEW_ITEM-LEADTIME[n]", "NEW_ITEM-VENDORMAT[n]", "NEW_ITEM-MATGROUP[n]"
                     };
 
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                string d = String.Empty;
+                
                 int i = 1;
                 foreach (var item in orderItems)
                 {
-                    itemDetailsDictionary.Add(itemNames[0].Replace("n", i.ToString()), item.Description);
-                    itemDetailsDictionary.Add(itemNames[1].Replace("n", i.ToString()), item.Quantity.ToString(CultureInfo.InvariantCulture));
-                    itemDetailsDictionary.Add(itemNames[2].Replace("n", i.ToString()), item.Unit);
-                    itemDetailsDictionary.Add(itemNames[3].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[4].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[5].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[6].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[7].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[8].Replace("n", i.ToString()), item);
-                    itemDetailsDictionary.Add(itemNames[9].Replace("n", i.ToString()), item);
-
+                    d += @"NEW_ITEM-DESCRIPTION["+i+"]="+item.Description;
+                    d += @"&NEW_ITEM-QUANTITY[" + i+"]="+item.Quantity;
+                    d += @"&NEW_ITEM-UNIT[" + i+"]="+item.Unit;
+                    d += @"&NEW_ITEM-PRICE[" + i+"]="+item.Price;
+                    d += @"&NEW_ITEM-CURRENCY[" + i+"]="+item.Currency;
+                    d += @"&NEW_ITEM-LEADTIME[" + i+"]="+item.LeadTime;
+                    d += @"&NEW_ITEM-VENDORMAT[" + i+"]="+item.VendorMat;
+                    d += @"&NEW_ITEM-MATGROUP[" + i+"]="+item.MatGroup;
+                    //itemDetailsDictionary.Add(itemNames[0].Replace("n", i.ToString()), item.Description);
+                    //itemDetailsDictionary.Add(itemNames[1].Replace("n", i.ToString()), item.Quantity);
+                    //itemDetailsDictionary.Add(itemNames[2].Replace("n", i.ToString()), item.Unit);
+                    //itemDetailsDictionary.Add(itemNames[3].Replace("n", i.ToString()), item.Price);
+                    //itemDetailsDictionary.Add(itemNames[4].Replace("n", i.ToString()), item.Currency);
+                    //itemDetailsDictionary.Add(itemNames[5].Replace("n", i.ToString()), item.LeadTime);
+                    //itemDetailsDictionary.Add(itemNames[6].Replace("n", i.ToString()), item.VendorMat);
+                    //itemDetailsDictionary.Add(itemNames[7].Replace("n", i.ToString()), item.MatGroup);
+                    i++;
                 }
+            
 
-                //for (int i = 0; i < orderItems.Count;  i++)
-                //{
-                //   itemDetailsDictionary.Add(itemNames[0].Replace("n", (i+1).ToString()),orderItems[i]); 
+            byte[] data = encoding.GetBytes(d);
+      
+   
 
-                //}
-
-
+            PostDataOfItem(data);
 
 
-            }
             return this.View();
+        }
+
+        private void PostDataOfItem(byte[] data)
+        {
+            
+
+            HttpWebRequest myRequest =
+                (HttpWebRequest)WebRequest.Create(_hookUrl);
+            myRequest.Method = "POST";
+            myRequest.ContentType = "application/x-www-form-urlencoded";
+            myRequest.ContentLength = data.Length;
+            Stream newStream = myRequest.GetRequestStream();
+            newStream.Write(data, 0, data.Length);
+            newStream.Close();
         }
     }
 }

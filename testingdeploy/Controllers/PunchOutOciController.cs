@@ -32,17 +32,15 @@ namespace testingdeploy.Controllers
             _hookUrl = HOOK_URL;
 
 
-            //var valied = this.UserValid(USERNAME, PASSWORD);
-            //if (valied)
-            //{
-            //    return RedirectToAction("CartPage", "PunchOutOci");
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
-            return this.View();
+            var valied = this.UserValid(USERNAME, PASSWORD);
+            if (valied)
+            {
+                return RedirectToAction("CartPage", "PunchOutOci");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
         }
 
@@ -63,7 +61,7 @@ namespace testingdeploy.Controllers
             return this.View("CartPage");
         }
 
-        public ActionResult PunchoutHookOci()
+        public void PunchoutHookOci()
         {
                 List<OciOrderItem> orderItems = new List<OciOrderItem>();
                 orderItems.Add(new OciOrderItem()
@@ -130,9 +128,6 @@ namespace testingdeploy.Controllers
    
 
             PostDataOfItem(d);
-
-
-            return this.View();
         }
 
         private void PostDataOfItem(string d)
@@ -145,7 +140,7 @@ namespace testingdeploy.Controllers
             string postData = d;
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
             // Set the ContentType property of the WebRequest.  
-            request.ContentType = "application/form-data";
+            request.ContentType = "application/x-www-form-urlencoded";
             // Set the ContentLength property of the WebRequest.  
             request.ContentLength = byteArray.Length;
             // Get the request stream.  

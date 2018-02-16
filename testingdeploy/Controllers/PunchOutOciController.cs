@@ -9,6 +9,7 @@ namespace testingdeploy.Controllers
     using System.Globalization;
     using System.IO;
     using System.Net;
+    using System.Net.Http;
     using System.Text;
 
     using Microsoft.Ajax.Utilities;
@@ -64,72 +65,64 @@ namespace testingdeploy.Controllers
 
         public void PunchoutHookOci()
         {
-                List<OciOrderItem> orderItems = new List<OciOrderItem>();
-                orderItems.Add(new OciOrderItem()
+            List<OciOrderItem> orderItems = new List<OciOrderItem>();
+            orderItems.Add(new OciOrderItem()
+            {
+                Description = "Item1",
+                Quantity = 10,
+                Unit = "EA",
+                Price = 10.22,
+                Currency = "NZD",
+                LeadTime = 10,
+                VendorMat = "43100100",
+                MatGroup = "43100103"
+            });
+
+            orderItems.Add(new OciOrderItem()
+            {
+                Description = "Item2",
+                Quantity = 20,
+                Unit = "EA",
+                Price = 50,
+                Currency = "NZD",
+                LeadTime = 5,
+                VendorMat = "1234567",
+                MatGroup = "5863145"
+            });
+
+
+            Dictionary<string, object> itemDetailsDictionary = new Dictionary<string, object>();
+
+            string[] itemNames =
                 {
-                    Description = "Item1",
-                    Quantity = 10,
-                    Unit = "EA",
-                    Price = 10.22,
-                    Currency = "NZD",
-                    LeadTime = 10,
-                    VendorMat = "43100100",
-                    MatGroup = "43100103"
-                });
-
-                orderItems.Add(new OciOrderItem()
-                {
-                    Description = "Item2",
-                    Quantity = 20,
-                    Unit = "EA",
-                    Price = 50,
-                    Currency = "NZD",
-                    LeadTime = 5,
-                    VendorMat = "1234567",
-                    MatGroup = "5863145"
-                });
-
-
-                Dictionary<string, object> itemDetailsDictionary = new Dictionary<string, object>();
-
-                string[] itemNames =
-                    {
                         "NEW_ITEM-DESCRIPTION[n]", "NEW_ITEM-QUANTITY[n]", "NEW_ITEM-UNIT[n]", "NEW_ITEM-PRICE[n]",
                         "NEW_ITEM-CURRENCY[n]", "NEW_ITEM-LEADTIME[n]", "NEW_ITEM-VENDORMAT[n]", "NEW_ITEM-MATGROUP[n]"
                     };
 
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string d = String.Empty;
-                
-                int i = 1;
-                foreach (var item in orderItems)
-                {
-                    d += @"NEW_ITEM-DESCRIPTION["+i+"]="+item.Description;
-                    d += @"&NEW_ITEM-QUANTITY[" + i+"]="+item.Quantity;
-                    d += @"&NEW_ITEM-UNIT[" + i+"]="+item.Unit;
-                    d += @"&NEW_ITEM-PRICE[" + i+"]="+item.Price;
-                    d += @"&NEW_ITEM-CURRENCY[" + i+"]="+item.Currency;
-                    d += @"&NEW_ITEM-LEADTIME[" + i+"]="+item.LeadTime;
-                    d += @"&NEW_ITEM-VENDORMAT[" + i+"]="+item.VendorMat;
-                    d += @"&NEW_ITEM-MATGROUP[" + i+"]="+item.MatGroup;
-                    //itemDetailsDictionary.Add(itemNames[0].Replace("n", i.ToString()), item.Description);
-                    //itemDetailsDictionary.Add(itemNames[1].Replace("n", i.ToString()), item.Quantity);
-                    //itemDetailsDictionary.Add(itemNames[2].Replace("n", i.ToString()), item.Unit);
-                    //itemDetailsDictionary.Add(itemNames[3].Replace("n", i.ToString()), item.Price);
-                    //itemDetailsDictionary.Add(itemNames[4].Replace("n", i.ToString()), item.Currency);
-                    //itemDetailsDictionary.Add(itemNames[5].Replace("n", i.ToString()), item.LeadTime);
-                    //itemDetailsDictionary.Add(itemNames[6].Replace("n", i.ToString()), item.VendorMat);
-                    //itemDetailsDictionary.Add(itemNames[7].Replace("n", i.ToString()), item.MatGroup);
-                    i++;
-                }
-            
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            string d = String.Empty;
+
+            int i = 1;
+            foreach (var item in orderItems)
+            {
+                d += @"NEW_ITEM-DESCRIPTION[" + i + "]=" + item.Description;
+                d += @"&NEW_ITEM-QUANTITY[" + i + "]=" + item.Quantity;
+                d += @"&NEW_ITEM-UNIT[" + i + "]=" + item.Unit;
+                d += @"&NEW_ITEM-PRICE[" + i + "]=" + item.Price;
+                d += @"&NEW_ITEM-CURRENCY[" + i + "]=" + item.Currency;
+                d += @"&NEW_ITEM-LEADTIME[" + i + "]=" + item.LeadTime;
+                d += @"&NEW_ITEM-VENDORMAT[" + i + "]=" + item.VendorMat;
+                d += @"&NEW_ITEM-MATGROUP[" + i + "]=" + item.MatGroup;
+                i++;
+            }
+
             this._log.TrackTrace(d);
             byte[] data = encoding.GetBytes(d);
         }
 
 
         [HttpPost]
-        public void PostData()
+        public async void PostData()
         {
             //// Create a request using a URL that can receive a post.   
             //WebRequest request = WebRequest.Create(_hookUrl);
@@ -199,17 +192,15 @@ namespace testingdeploy.Controllers
                 MatGroup = "5863145"
             });
 
-
             Dictionary<string, object> itemDetailsDictionary = new Dictionary<string, object>();
 
-            string[] itemNames =
-                {
-                        "NEW_ITEM-DESCRIPTION[n]", "NEW_ITEM-QUANTITY[n]", "NEW_ITEM-UNIT[n]", "NEW_ITEM-PRICE[n]",
-                        "NEW_ITEM-CURRENCY[n]", "NEW_ITEM-LEADTIME[n]", "NEW_ITEM-VENDORMAT[n]", "NEW_ITEM-MATGROUP[n]"
-                    };
-            
-            string d = String.Empty;
+            //string[] itemNames =
+            //    {
+            //            "NEW_ITEM-DESCRIPTION[n]", "NEW_ITEM-QUANTITY[n]", "NEW_ITEM-UNIT[n]", "NEW_ITEM-PRICE[n]",
+            //            "NEW_ITEM-CURRENCY[n]", "NEW_ITEM-LEADTIME[n]", "NEW_ITEM-VENDORMAT[n]", "NEW_ITEM-MATGROUP[n]"
+            //        };
 
+            string d = string.Empty;
             int i = 1;
             foreach (var item in orderItems)
             {
@@ -221,48 +212,55 @@ namespace testingdeploy.Controllers
                 d += @"&NEW_ITEM-LEADTIME[" + i + "]=" + item.LeadTime;
                 d += @"&NEW_ITEM-VENDORMAT[" + i + "]=" + item.VendorMat;
                 d += @"&NEW_ITEM-MATGROUP[" + i + "]=" + item.MatGroup;
-                //itemDetailsDictionary.Add(itemNames[0].Replace("n", i.ToString()), item.Description);
-                //itemDetailsDictionary.Add(itemNames[1].Replace("n", i.ToString()), item.Quantity);
-                //itemDetailsDictionary.Add(itemNames[2].Replace("n", i.ToString()), item.Unit);
-                //itemDetailsDictionary.Add(itemNames[3].Replace("n", i.ToString()), item.Price);
-                //itemDetailsDictionary.Add(itemNames[4].Replace("n", i.ToString()), item.Currency);
-                //itemDetailsDictionary.Add(itemNames[5].Replace("n", i.ToString()), item.LeadTime);
-                //itemDetailsDictionary.Add(itemNames[6].Replace("n", i.ToString()), item.VendorMat);
-                //itemDetailsDictionary.Add(itemNames[7].Replace("n", i.ToString()), item.MatGroup);
                 i++;
             }
 
+            //try
+            //{
+            //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
+            //    request.Method = "POST";
+            //    request.ContentType = "application/x-www-form-urlencoded";
+            //    string postData = d;
+            //    byte[] bytes = Encoding.UTF8.GetBytes(postData);
+            //    request.ContentLength = bytes.Length;
 
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                string postData = d;
-                byte[] bytes = Encoding.UTF8.GetBytes(postData);
-                request.ContentLength = bytes.Length;
+            //    Stream requestStream = request.GetRequestStream();
+            //    requestStream.Write(bytes, 0, bytes.Length);
 
-                Stream requestStream = request.GetRequestStream();
-                requestStream.Write(bytes, 0, bytes.Length);
+            //    WebResponse response = request.GetResponse();
+            //    Stream stream = response.GetResponseStream();
+            //    StreamReader reader = new StreamReader(stream);
 
-                WebResponse response = request.GetResponse();
-                Stream stream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(stream);
+            //    var result = reader.ReadToEnd();
+            //    stream.Dispose();
+            //    reader.Dispose();
+            //}
+            //catch (Exception e)
+            //{
+            //    this._log.TrackException(e);
+            //    throw;
+            //}
 
-                var result = reader.ReadToEnd();
-                stream.Dispose();
-                reader.Dispose();
-            }
-            catch (Exception e)
-            {
-                this._log.TrackException(e);
-                throw;
-            }
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(_hookUrl);
+            var request = new HttpRequestMessage(HttpMethod.Post, "");
 
-
-
+            var keyValues = new List<KeyValuePair<string, string>>();
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-DESCRIPTION[0]", orderItems[0].Description));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-QUANTITY[0]", orderItems[0].Quantity.ToString()));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-UNIT[0]", orderItems[0].Unit));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-PRICE[0]", orderItems[0].Price.ToString()));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-CURRENCY[0]", orderItems[0].Currency));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-LEADTIME[0]", orderItems[0].LeadTime.ToString()));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-VENDORMAT[0]", orderItems[0].VendorMat));
+            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-MATGROUP[0]", orderItems[0].MatGroup));
             
-            
+
+            request.Content = new FormUrlEncodedContent(keyValues);
+            var response = await client.SendAsync(request);
+
+
+
         }
     }
 }

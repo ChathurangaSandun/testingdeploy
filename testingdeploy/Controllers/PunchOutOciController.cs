@@ -122,7 +122,7 @@ namespace testingdeploy.Controllers
 
 
         [HttpPost]
-        public async void PostData()
+        public  void PostData()
         {
             //// Create a request using a URL that can receive a post.   
             //WebRequest request = WebRequest.Create(_hookUrl);
@@ -258,7 +258,7 @@ namespace testingdeploy.Controllers
 
             request.Content = new StringContent(d, Encoding.UTF8, "application/x-www-form-urlencoded");
             // request.Content = new FormUrlEncodedContent(keyValues);
-            var response = await client.SendAsync(request);
+            var response =  client.SendAsync(request);
 
 
 

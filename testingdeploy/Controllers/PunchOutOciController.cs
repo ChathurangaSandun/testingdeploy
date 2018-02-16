@@ -215,52 +215,52 @@ namespace testingdeploy.Controllers
                 i++;
             }
 
-            //try
-            //{
-            //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
-            //    request.Method = "POST";
-            //    request.ContentType = "application/x-www-form-urlencoded";
-            //    string postData = d;
-            //    byte[] bytes = Encoding.UTF8.GetBytes(postData);
-            //    request.ContentLength = bytes.Length;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_hookUrl);
+                request.Method = "POST";
+                request.ContentType = "application/x-www-form-urlencoded";
+                string postData = d;
+                byte[] bytes = Encoding.UTF8.GetBytes(postData);
+                request.ContentLength = bytes.Length;
 
-            //    Stream requestStream = request.GetRequestStream();
-            //    requestStream.Write(bytes, 0, bytes.Length);
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(bytes, 0, bytes.Length);
 
-            //    WebResponse response = request.GetResponse();
-            //    Stream stream = response.GetResponseStream();
-            //    StreamReader reader = new StreamReader(stream);
+                WebResponse response = request.GetResponse();
+                Stream stream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(stream);
 
-            //    var result = reader.ReadToEnd();
-            //    stream.Dispose();
-            //    reader.Dispose();
-            //}
-            //catch (Exception e)
-            //{
-            //    this._log.TrackException(e);
-            //    throw;
-            //}
+                var result = reader.ReadToEnd();
+                stream.Dispose();
+                reader.Dispose();
+            }
+            catch (Exception e)
+            {
+                this._log.TrackException(e);
+                throw;
+            }
 
             var client = new HttpClient();
-            client.BaseAddress = new Uri(_hookUrl);
-            var request = new HttpRequestMessage(HttpMethod.Post, "");
+            //client.BaseAddress = new Uri(_hookUrl);
+            //var request = new HttpRequestMessage(HttpMethod.Post, "");
 
-            var keyValues = new List<KeyValuePair<string, string>>();
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-DESCRIPTION[0]", orderItems[0].Description));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-QUANTITY[0]", orderItems[0].Quantity.ToString()));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-UNIT[0]", orderItems[0].Unit));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-PRICE[0]", orderItems[0].Price.ToString()));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-CURRENCY[0]", orderItems[0].Currency));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-LEADTIME[0]", orderItems[0].LeadTime.ToString()));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-VENDORMAT[0]", orderItems[0].VendorMat));
-            keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-MATGROUP[0]", orderItems[0].MatGroup));
+            //var keyValues = new List<KeyValuePair<string, string>>();
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-DESCRIPTION[0]", orderItems[0].Description));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-QUANTITY[0]", orderItems[0].Quantity.ToString()));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-UNIT[0]", orderItems[0].Unit));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-PRICE[0]", orderItems[0].Price.ToString()));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-CURRENCY[0]", orderItems[0].Currency));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-LEADTIME[0]", orderItems[0].LeadTime.ToString()));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-VENDORMAT[0]", orderItems[0].VendorMat));
+            //keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-MATGROUP[0]", orderItems[0].MatGroup));
 
 
-            request.Content = new StringContent(d, Encoding.UTF8, "application/x-www-form-urlencoded");
-            // request.Content = new FormUrlEncodedContent(keyValues);
-            var response =  client.SendAsync(request);
+            //request.Content = new StringContent(d, Encoding.UTF8, "application/x-www-form-urlencoded");
+            //// request.Content = new FormUrlEncodedContent(keyValues);
+            //var response =  client.SendAsync(request);
 
-            return Redirect(_hookUrl);
+            //return Redirect(_hookUrl);
 
         }
     }

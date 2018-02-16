@@ -5,4 +5,51 @@
 }
 
 <h2>Cart Page</h2>
-<h1>@Html.ActionLink("Punchout-OCI", "PunchoutHookOci", "PunchOutOci")</h1>
+@*<h1>@Html.ActionLink("Punchout-OCI", "PunchoutHookOci", "PunchOutOci")</h1>*@
+
+
+
+<form action="@ViewBag.hook_url" method="post" target="_top">
+    <input type="hidden" name="~caller" value="CTLG" />
+    <-- Item 1 -->
+    <input type="hidden" name="NEW_ITEM-DESCRIPTION[1]" value="Article number 1">
+    <input type="hidden" name="NEW_ITEM-QUANTITY[1]" value="1">
+    <input type="hidden" name="NEW_ITEM-UNIT[1]" value="EA">
+    <input type="hidden" name="NEW_ITEM-PRICE[1]" value="250">
+    <input type="hidden" name="NEW_ITEM-PRICEUNIT[1]" value="1">
+    <input type="hidden" name="NEW_ITEM-CURRENCY[1]" value="EUR">
+    <input type="hidden" name="NEW_ITEM-LEADTIME[1]" value="10">
+    <input type="hidden" name="NEW_ITEM-VENDORMAT[1]" value="5433334">
+    <input type="hidden" name="NEW_ITEM-MANUFACTCODE[1]" value="AN1">
+    <input type="hidden" name="NEW_ITEM-EXT_QUOTE_ID[1]" value="">
+    <input type="hidden" name="NEW_ITEM-EXT_PRODUCT_ID[1]" value="">
+    <input type="hidden" name="NEW_ITEM-EXT_SCHEMA_TYPE[1]" value="UNSPSC">
+    <input type="hidden" name="NEW_ITEM-SERVICE[1]" value="X" />
+    <input type="hidden" name="NEW_ITEM-EXT_CATEGORY_ID[1]" value="43100100">
+    <input type="hidden" name="NEW_ITEM-MATGROUP[1]" value="43100103">
+    <input type="hidden" name="NEW_ITEM-PARENT_ID[1]" value="">
+    <input type="hidden" name="NEW_ITEM-ITEM_TYPE[1]" value="">
+    <-- Item 2 -->
+    <input type="hidden" name="NEW_ITEM-DESCRIPTION[2]" value="Article Number 2">
+    <input type="hidden" name="NEW_ITEM-QUANTITY[2]" value="1">
+    <input type="hidden" name="NEW_ITEM-UNIT[2]" value="EA">
+    <input type="hidden" name="NEW_ITEM-PRICE[2]" value="250">
+    <input type="hidden" name="NEW_ITEM-PRICEUNIT[2]" value="1">
+    <input type="hidden" name="NEW_ITEM-CURRENCY[2]" value="EUR">
+    <input type="hidden" name="NEW_ITEM-LEADTIME[2]" value="10">
+    <input type="hidden" name="NEW_ITEM-VENDORMAT[2]" value="5433335">
+    <input type="hidden" name="NEW_ITEM-MANUFACTCODE[2]" value="AN2">
+    <input type="hidden" name="NEW_ITEM-EXT_QUOTE_ID[2]" value="">
+    <input type="hidden" name="NEW_ITEM-EXT_PRODUCT_ID[2]" value="">
+    <input type="hidden" name="NEW_ITEM-EXT_SCHEMA_TYPE[2]" value="UNSPSC">
+    <input type="hidden" name="NEW_ITEM-EXT_CATEGORY_ID[2]" value="43100100">
+    <input type="hidden" name="NEW_ITEM-SERVICE[2]" value="X" />
+    <input type="hidden" name="NEW_ITEM-MATGROUP[2]" value="43100103">
+    <input type="hidden" name="NEW_ITEM-PARENT_ID[2]" value="">
+    <input type="hidden" name="NEW_ITEM-ITEM_TYPE[2]" value="">
+    <center>
+    <input type="submit" value="Transfer shopping cart" id="submit1" name="submit1">
+    <br>
+    </center>
+</form>
+

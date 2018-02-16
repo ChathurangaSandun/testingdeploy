@@ -58,6 +58,7 @@ namespace testingdeploy.Controllers
 
         public ActionResult CartPage()
         {
+            ViewBag.hook_url = _hookUrl;
             return this.View("CartPage");
         }
 
@@ -66,7 +67,7 @@ namespace testingdeploy.Controllers
                 List<OciOrderItem> orderItems = new List<OciOrderItem>();
                 orderItems.Add(new OciOrderItem()
                 {
-                    Description = "Item 1",
+                    Description = "Item1",
                     Quantity = 10,
                     Unit = "EA",
                     Price = 10.22,
@@ -78,7 +79,7 @@ namespace testingdeploy.Controllers
 
                 orderItems.Add(new OciOrderItem()
                 {
-                    Description = "Item 2",
+                    Description = "Item2",
                     Quantity = 20,
                     Unit = "EA",
                     Price = 50,
@@ -132,48 +133,77 @@ namespace testingdeploy.Controllers
 
         private void PostDataOfItem(string d)
         {
-            // Create a request using a URL that can receive a post.   
-            WebRequest request = WebRequest.Create(_hookUrl);
-            // Set the Method property of the request to POST.  
-            request.Method = "POST";
-            // Create POST data and convert it to a byte array.  
-            string postData = d;
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            // Set the ContentType property of the WebRequest.  
-            request.ContentType = "application/x-www-form-urlencoded";
-            // Set the ContentLength property of the WebRequest.  
-            request.ContentLength = byteArray.Length;
-            // Get the request stream.  
-            Stream dataStream = request.GetRequestStream();
-            // Write the data to the request stream.  
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.  
-            dataStream.Close();
-            // Get the response.  
-            WebResponse response = request.GetResponse();
-            // Display the status.  
-            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.  
-            dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.  
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.  
-            string responseFromServer = reader.ReadToEnd();
-            // Display the content.  
-            Console.WriteLine(responseFromServer);
-            // Clean up the streams.  
-            reader.Close();
-            dataStream.Close();
-            response.Close();
+            //// Create a request using a URL that can receive a post.   
+            //WebRequest request = WebRequest.Create(_hookUrl);
+            //// Set the Method property of the request to POST.  
+            //request.Method = "POST";
+            //// Create POST data and convert it to a byte array.  
+            //string postData = d;
+            //byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            //// Set the ContentType property of the WebRequest.  
+            //request.ContentType = "application/x-www-form-urlencoded";
+            //// Set the ContentLength property of the WebRequest.  
+            //request.ContentLength = byteArray.Length;
+            //// Get the request stream.  
+            //Stream dataStream = request.GetRequestStream();
+            //// Write the data to the request stream.  
+            //dataStream.Write(byteArray, 0, byteArray.Length);
+            //// Close the Stream object.  
+            //dataStream.Close();
+            //// Get the response.  
+            //WebResponse response = request.GetResponse();
+            //// Display the status.  
+            //Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            //// Get the stream containing content returned by the server.  
+            //dataStream = response.GetResponseStream();
+            //// Open the stream using a StreamReader for easy access.  
+            //StreamReader reader = new StreamReader(dataStream);
+            //// Read the content.  
+            //string responseFromServer = reader.ReadToEnd();
+            //// Display the content.  
+            //Console.WriteLine(responseFromServer);
+            //// Clean up the streams.  
+            //reader.Close();
+            //dataStream.Close();
+            //response.Close();
 
-            //HttpWebRequest myRequest =
-            //    (HttpWebRequest)WebRequest.Create(_hookUrl);
-            //myRequest.Method = "POST";
-            //myRequest.ContentType = "application/x-www-form-urlencoded";
-            //myRequest.ContentLength = data.Length;
-            //Stream newStream = myRequest.GetRequestStream();
-            //newStream.Write(data, 0, data.Length);
-            //newStream.Close();
+            ////HttpWebRequest myRequest =
+            ////    (HttpWebRequest)WebRequest.Create(_hookUrl);
+            ////myRequest.Method = "POST";
+            ////myRequest.ContentType = "application/x-www-form-urlencoded";
+            ////myRequest.ContentLength = data.Length;
+            ////Stream newStream = myRequest.GetRequestStream();
+            ////newStream.Write(data, 0, data.Length);
+            ////newStream.Close();
+
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://localhost:63392/PunchOutOci/PostData");
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            string postData = d;
+            byte[] bytes = Encoding.UTF8.GetBytes(postData);
+            request.ContentLength = bytes.Length;
+
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(bytes, 0, bytes.Length);
+
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(stream);
+
+            var result = reader.ReadToEnd();
+            stream.Dispose();
+            reader.Dispose();
+
+
+        }
+
+
+        [HttpPost]
+        public string PostData(string s)
+        {
+            string ss = s;
+            return "ok";
         }
     }
 }

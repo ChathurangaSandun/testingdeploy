@@ -254,9 +254,10 @@ namespace testingdeploy.Controllers
             keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-LEADTIME[0]", orderItems[0].LeadTime.ToString()));
             keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-VENDORMAT[0]", orderItems[0].VendorMat));
             keyValues.Add(new KeyValuePair<string, string>("NEW_ITEM-MATGROUP[0]", orderItems[0].MatGroup));
-            
 
-            request.Content = new FormUrlEncodedContent(keyValues);
+
+            request.Content = new StringContent(d, Encoding.UTF8, "application/x-www-form-urlencoded");
+            // request.Content = new FormUrlEncodedContent(keyValues);
             var response = await client.SendAsync(request);
 
 

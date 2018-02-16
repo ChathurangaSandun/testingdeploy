@@ -121,8 +121,8 @@ namespace testingdeploy.Controllers
         }
 
 
-        [HttpPost]
-        public  void PostData()
+        
+        public  ActionResult PostData()
         {
             //// Create a request using a URL that can receive a post.   
             //WebRequest request = WebRequest.Create(_hookUrl);
@@ -260,7 +260,7 @@ namespace testingdeploy.Controllers
             // request.Content = new FormUrlEncodedContent(keyValues);
             var response =  client.SendAsync(request);
 
-
+            return Redirect(_hookUrl);
 
         }
     }

@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\OciOrderItem.cs" />
     <Compile Include="Models\PunchOutOderMessage.cs" />
     <Compile Include="Models\PunchoutResponse.cs" />
     <Compile Include="Models\PunchOutSetupRequest.cs" />

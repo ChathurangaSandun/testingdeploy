@@ -12,6 +12,7 @@ namespace testingdeploy.Models
         public string  Unit { get; set; }
         public double Price { get; set; }
         public string Currency { get; set; }
+
         public int LeadTime { get; set; }
         public string VendorMat { get; set; }
         public string  MatGroup { get; set; }

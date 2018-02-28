@@ -32,11 +32,11 @@
             var valied = this.UserValid(USERNAME, PASSWORD);
             if (valied)
             {
-                return View("CartPage", "PunchOutOci");
+                return RedirectToAction("CartPage", "PunchOutOci");
             }
             else
             {
-                return View("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
         }

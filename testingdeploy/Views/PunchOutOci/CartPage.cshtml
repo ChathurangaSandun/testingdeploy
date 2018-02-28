@@ -58,14 +58,14 @@
     
     @for (int  i = 0; i< Model.Count ; i++)
     {
-        <input type="hidden" name="NEW_ITEM-DESCRIPTION[@(i+1)]" value="@Model[i].Description">
-        <input type="hidden" name="NEW_ITEM-QUANTITY[@(i+1)]" value="@Model[i].Quantity">
-        <input type="hidden" name="NEW_ITEM-UNIT[@(i+1)]" value="@Model[i].Unit">
-        <input type="hidden" name="NEW_ITEM-PRICE[@(i+1)]" value="@Model[i].Price">
-        <input type="hidden" name="NEW_ITEM-VENDORMAT[@(i+1)]" value="@Model[i].VendorMat">
-        <input type="hidden" name="NEW_ITEM-CURRENCY[@(i+1)]" value="@Model[i].Currency">
-        <input type="hidden" name="NEW_ITEM-LEADTIME[@(i+1)]" value="@Model[i].LeadTime">
-        <input type="hidden" name="NEW_ITEM-MATGROUP[@(i+1)]" value="@Model[i].MatGroup">
+        <input type="hidden" name="NEW_ITEM-DESCRIPTION[@(i+1)]" value="@Model[i].Description" maxlength="40">
+        <input type="hidden" name="NEW_ITEM-QUANTITY[@(i+1)]" value="@Model[i].Quantity" maxlength="15">
+        <input type="hidden" name="NEW_ITEM-UNIT[@(i+1)]" value="@Model[i].Unit" maxlength="3">
+        <input type="hidden" name="NEW_ITEM-PRICE[@(i+1)]" value="@Model[i].Price" maxlength="15">
+        <input type="hidden" name="NEW_ITEM-VENDORMAT[@(i+1)]" value="@Model[i].VendorMat" maxlength="15">
+        <input type="hidden" name="NEW_ITEM-CURRENCY[@(i+1)]" value="@Model[i].Currency" maxlength="5">
+        <input type="hidden" name="NEW_ITEM-LEADTIME[@(i+1)]" value="@Model[i].LeadTime" maxlength="5">
+        <input type="hidden" name="NEW_ITEM-MATGROUP[@(i+1)]" value="@Model[i].MatGroup" maxlength="40">
         
     }
 

@@ -60,7 +60,7 @@
             {
                 Description = "Item1",
                 Quantity = 10,
-                Unit = "EA55555lllllddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                Unit = "EA",
                 Price = 10000000000000000000.22,
                 Currency = "NZD",
                 LeadTime = 10,

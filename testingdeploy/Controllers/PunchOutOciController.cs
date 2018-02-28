@@ -61,7 +61,7 @@
                 Description = "Item1",
                 Quantity = 10,
                 Unit = "EA55555lllllddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-                Price = 10.22,
+                Price = 10000000000000000000.22,
                 Currency = "NZD",
                 LeadTime = 10,
                 VendorMat = "43100100",

@@ -32,7 +32,7 @@
             var valied = this.UserValid(USERNAME, PASSWORD);
             if (valied)
             {
-                return View("CartPage", "PunchOutOci");
+                return View();
             }
             else
             {
